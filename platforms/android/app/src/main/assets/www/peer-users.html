@@ -1,0 +1,79 @@
+<html>
+<title>PubNub ChatEngine</title>
+
+<head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"></link>
+    <link rel="stylesheet" type="text/css" href="css/chat.css"></link>
+    <link rel="stylesheet" type="text/css" href="css/style.css"></link>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.0/handlebars.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.1.1/list.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chat-engine@latest/dist/chat-engine.min.js"></script>
+    <script src="https://dogaan.github.io/generateperson.js"></script>
+
+</head>
+
+<body>
+<div class="container clearfix">
+    <div class="people-list hide" id="people-list">
+        <ul class="list">
+        </ul>
+    </div>
+    <div class="user-list">
+        <p class="label">Select to whom you want to chat with</p>
+        <ul class="list-item chat-users">
+            <li class="item" id="100"  data-id="100" data-name="satya">Satya</li>
+            <li class="item" id="101" data-id="101" data-name="manoj">Manoj</li>
+            <li class="item" id="102" data-id="102" data-name="ayaz">Ayaz</li>
+            <li class="item" id="103" data-id="103" data-name="rajesh">Rajesh</li>
+            <li class="item" id="104" data-id="104" data-name="shital">Shital</li>
+            <li class="item" id="105" data-id="105" data-name="sabyasachi">sabyasachi</li>
+        </ul>
+    </div>
+    <!-- end chat -->
+</div>
+<!-- end container -->
+
+<script>
+    var currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
+    $('.chat-users li').find('#' + currentUser.id).remove();
+    $('#' + currentUser.id).hide();
+
+    $(".chat-users li").on('click', function(){
+        console.log("item clicked", $(this).data());
+        var selectedUser = {
+            "first":"Jordan",
+            "last":"Todd",
+            "full":"Jordan Todd",
+            "uuid":"1544098527388",
+            "avatar":"",
+            "online":true,
+            "lastSeen":38
+        }
+        var thisUser = $(this).data();
+        selectedUser.first = thisUser.name;
+        selectedUser.uuid = thisUser.id;
+        console.log("selectedUser", selectedUser);
+        localStorage.setItem('selectedUser', JSON.stringify(selectedUser));
+
+
+        var chatRoom = '';
+        // maintain charoom name uniform
+        var selectedUser = parseInt($(this).data().id);
+        if(parseInt(currentUser.id) < selectedUser){
+            chatRoom = currentUser.id + '-' + $(this).data().id;
+        }else{
+            chatRoom = selectedUser  + '-' + currentUser.id;
+        }
+     
+        console.log("chatRoom", chatRoom);
+        localStorage.setItem('selectedChatRoom', chatRoom);
+
+        window.location.href = 'chat.html';
+    })
+</script>
+</body>
+</html>

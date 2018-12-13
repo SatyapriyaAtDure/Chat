@@ -1,0 +1,38 @@
+.my-btn{
+    background: #787932;
+    margin: 10px;
+    padding: 10px;
+    text-align: center;
+    border-radius: 18px;
+    display: block;
+    color: white;
+}
+.list-item{
+    padding: 0;
+}
+.user-list{
+
+}
+li.item {
+    padding: 10px 0 10px;
+    border-bottom: 1px solid #c3c3c3;
+    width: 100%;
+    list-style: none;
+    text-align: center;
+    background: #444753;
+}
+.container{
+    background: transparent;
+}
+body, li{
+    /* font-size: 30px; */
+}
+.select-user{
+    color: black;
+    font-size: 20px;
+}
+.label{
+    color: black;
+    font-size: 17px;
+    text-align: center;
+}
