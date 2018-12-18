@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "124138816462",
+    "firebase_url": "https://chatapp-919ba.firebaseio.com",
+    "project_id": "chatapp-919ba",
+    "storage_bucket": "chatapp-919ba.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:124138816462:android:c9b84fb8667b88a8",
+        "android_client_info": {
+          "package_name": "com.duretechnologies.apps.ios.chat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "124138816462-qrvm2s6srijenslpgct4qupigpldife5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsbWFo4EP-yu44iLbkEry9urcDpjgyWC8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

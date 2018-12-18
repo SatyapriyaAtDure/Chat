@@ -1,11 +1,12 @@
-// ChatEngine = ChatEngineCore.create({
-//     publishKey: 'pub-c-9b914983-9487-4be5-a0e4-0c27a20e6572',
-//     subscribeKey: 'sub-c-acc8e784-cd70-11e8-b02a-a6a8b6327be1'
-// });
 ChatEngine = ChatEngineCore.create({
-    publishKey: 'pub-c-6f35869b-2763-4cd7-b237-128cfe5dc02e',
-    subscribeKey: 'sub-c-1d3aa856-f952-11e8-8ebf-6a684a5fb351'
+    publishKey: 'pub-c-4574f10f-d8a9-4e54-991b-4b4d5309be43',
+    subscribeKey: 'sub-c-5b41fd46-0039-11e9-a39c-e60c31199fb2'
 });
+
+// ChatEngine = ChatEngineCore.create({
+//     publishKey: 'pub-c-6f35869b-2763-4cd7-b237-128cfe5dc02e',
+//     subscribeKey: 'sub-c-1d3aa856-f952-11e8-8ebf-6a684a5fb351'
+// });
 
 // use a helper function to generate a new profile
 let newPerson = null;
@@ -117,12 +118,17 @@ const sendMessage = () => {
     if (message.length) {
       
         // emit the `message` event to everyone in the Chat
+        debugger;
         myChat.emit( 'message', {
             text: message,
             translate: {
                 text: message,
                 source: source_language,
                 target: target_language
+            },"pn_gcm": {
+                "data" : {
+                    "a" : "1"
+                }
             }
         } );
 

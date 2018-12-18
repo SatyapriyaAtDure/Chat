@@ -11,34 +11,39 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 </head>
 
-<body>
-    <div class="container clearfix">
-        <div class="select-user">
-            <span class="select-who">I am:</span>
-            <select>
-                <option val=''>Select option</option>
-                <option val='satya' data-id='100' data-name="satya" data-first="satya">Satya</option>
-                <option val='manoj' data-id='101' data-name="manoj" data-first="manoj">Manoj</option>
-                <option val='ayaz' data-id='102' data-name="ayaz" data-first="ayaz">Ayaz</option>
-                <option val='rajesh' data-id='103' data-name="rajesh" data-first="rajesh">Rajesh</option>
-                <option val='shital' data-id='104' data-name="shital" data-first="shital">Shital</option>
-                <option val='sabyasachi' data-id='105' data-name="sabyasachi" data-first="sabyasachi">Sabyasachi</option>
-            </select>
+<body class="chat-rooms-page">
+    <div class="center-content">
+        <div class="inner-content">
+            <div class="container clearfix">
+                <div class="select-user">
+                    <span class="select-who">I am:</span>
+                    <select>
+                        <option val=''>Select option</option>
+                        <option val='satya' data-id='100' data-name="satya" data-first="satya">Satya</option>
+                        <option val='manoj' data-id='101' data-name="manoj" data-first="manoj">Manoj</option>
+                        <option val='ayaz' data-id='102' data-name="ayaz" data-first="ayaz">Ayaz</option>
+                        <option val='rajesh' data-id='103' data-name="rajesh" data-first="rajesh">Rajesh</option>
+                        <option val='shital' data-id='104' data-name="shital" data-first="shital">Shital</option>
+                        <option val='sabyasachi' data-id='105' data-name="sabyasachi" data-first="sabyasachi">Sabyasachi</option>
+                    </select>
+                </div>
+                <div class="people-list hide" id="people-list">
+                    <ul class="list">
+                    </ul>
+                </div>
+                <div class="user-list">
+                    <ul class="list-item">
+                        <li class="item" data-roomname="start-club">Start Club</li>
+                        <!-- <li class="item" data-roomname="chat-engine-demo-room2">chat-engine-demo-room2</li>
+                            <li class="item" data-roomname="chat-engine-demo-room3">chat-engine-demo-room3</li> -->
+                    </ul>
+                </div>
+                <li class="item one-to-one">Peer Chat</li>
+                <!-- end chat -->
+            </div>
         </div>
-        <div class="people-list hide" id="people-list">
-            <ul class="list">
-            </ul>
-        </div>
-        <div class="user-list">
-            <ul class="list-item">
-                <li class="item" data-roomname="start-club">Start Club</li>
-                <!-- <li class="item" data-roomname="chat-engine-demo-room2">chat-engine-demo-room2</li>
-                <li class="item" data-roomname="chat-engine-demo-room3">chat-engine-demo-room3</li> -->
-            </ul>
-        </div>
-        <li class="item one-to-one">Peer Chat</li>
-        <!-- end chat -->
     </div>
+
     <!-- end container -->
 
     <script>
@@ -49,7 +54,8 @@
                 console.log("item clicked");
                 localStorage.setItem('selectedChatRoom', $(this).data().roomname);
                 localStorage.setItem('chatType', 'group');
-                window.location.href = 'chat.html';
+                // window.location.href = 'chat.html';
+                window.location.href = 'fire-chat.html';
             } else {
                 alert("select who you are");
             }

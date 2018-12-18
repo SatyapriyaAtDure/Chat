@@ -1,0 +1,10 @@
+www/bower_components/
+platforms/*
+plugins/*
+hooks/
+node_modules/*
+~*
+*.orig
+package-lock.json
+.vscode/*
+.DS_Store

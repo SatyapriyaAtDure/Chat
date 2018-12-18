@@ -1,11 +1,12 @@
 .my-btn{
-    background: #787932;
-    margin: 10px;
-    padding: 10px;
     text-align: center;
     border-radius: 18px;
     display: block;
     color: white;
+    text-decoration: none;
+}
+.my-btn-list{
+    padding:0;
 }
 .list-item{
     padding: 0;
@@ -19,13 +20,16 @@ li.item {
     width: 100%;
     list-style: none;
     text-align: center;
-    background: #444753;
+    background: #8c0000;
 }
 .container{
     background: transparent;
 }
 body, li{
     /* font-size: 30px; */
+}
+.chat-rooms-page{
+    background: white;
 }
 .select-user{
     color: black;
@@ -35,4 +39,71 @@ body, li{
     color: black;
     font-size: 17px;
     text-align: center;
+}
+.center-content{
+    height: 100%;
+    width: 100%;
+    display: table;
+}
+.inner-content{
+    vertical-align: middle;
+    display: table-cell;
+}
+
+.contact-page{
+    background: white;
+    margin:0;
+}
+
+.contact-image{
+    border-radius: 50%;
+    width: 40px;
+    margin-top: 5px;
+}
+.contact-list{
+    color: black;
+    padding: 10px;
+
+}
+.chat-users{
+    margin:0;
+}
+.contact-list li{
+    color: black;
+    background: white;
+    text-align: left;
+    padding: 3px 0 3px;
+}
+.contact-right-sec{
+    display: inline-block;
+    position: relative;
+    width: calc(100% - 50px);
+}
+.contact-title{
+    vertical-align: top;
+    padding: 0 10px;
+    font-weight: bold;
+    font-size: 15px;
+}
+.contact-subtitle{
+    vertical-align: top;
+    padding: 0px 10px 0;
+    color: grey;
+    font-size: 10px;
+}
+.select-label {
+    font-size: 17px;
+    background: #8c0000;
+    padding: 14px;
+    margin: 0;
+}
+.noti-count {
+    position: absolute;
+    right: 0;
+    top: 0;
+    background: #d0134d;
+    color: white;
+    padding: 2px 10px;
+    font-size: 12px;
+    border-radius: 12px;
 }

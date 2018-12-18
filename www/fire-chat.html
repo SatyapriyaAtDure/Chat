@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  <!-- Latest compiled and minified CSS -->
+
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <!-- Latest compiled JavaScript -->
+  <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css'>
+  <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css'>
+  <link href="css/firechat.css" rel="stylesheet">
+  <script src="js/moment.min.js"></script>
+
+</head>
+
+<body>
+
+
+  <div id="frame">
+    <div class="content">
+      <div class="contact-profile">
+        <img class="chat-head-image" src="https://via.placeholder.com/50" alt="avatar" />
+        <p class="chat-title">Chat</p>
+
+      </div>
+      <div class="messages" id="chatBox">
+        <ul>
+
+        </ul>
+      </div>
+      <div class="message-input">
+        <div class="wrap">
+          <input type="text" placeholder="Write your message..." />
+          <button class="submit"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="text/javascript" src="cordova.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.13.0/firebase.js"></script>
+
+
+  <script>
+
+    $(".messages").animate({ scrollTop: $(document).height() }, "slow");
+    var user_id;
+
+    function newMessage() {
+
+      message = $(".message-input input").val();
+      if ($.trim(message) == '') {
+        return false;
+      }
+      writeUserData(message);
+    };
+
+    $('.submit').click(function () {
+      newMessage();
+    });
+
+    $(window).on('keydown', function (e) {
+
+      if (e.which == 13) {
+        newMessage();
+        return false;
+      }
+    });
+  </script>
+
+  <!-- Firebase -->
+  <script>
+    var user_id = '';
+    user_id = JSON.parse(localStorage.getItem('currentUser')).id;
+    var config = {
+      apiKey: "AIzaSyDmkV6PjllOM0ZBml7YJ5W-3Pl4W-mBTZ0",
+      authDomain: "chatapp-919ba.firebaseapp.com",
+      databaseURL: "https://chatapp-919ba.firebaseio.com",
+      projectId: "chatapp-919ba",
+      storageBucket: "chatapp-919ba.appspot.com",
+      messagingSenderId: "124138816462"
+    };
+    firebase.initializeApp(config);
+
+    var user = firebase.auth().signInAnonymously();
+
+    firebase.auth().onAuthStateChanged(function (user) {
+      if (user) {
+        // User is signed in.
+        var isAnonymous = user.isAnonymous;
+        // user_id = user.uid;
+        user_id = user_id;
+      } else {
+        // User is signed out.
+      }
+    });
+  </script>
+
+  <script>
+
+    // get firebase database reference...
+    var selectedChatRoom = localStorage.getItem('selectedChatRoom');
+    var chatType = localStorage.getItem('chatType');
+    var selectedUser = JSON.parse(localStorage.getItem('selectedUser'));
+    var currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    var db_ref = firebase.database().ref('/' + selectedChatRoom);
+    if (chatType == 'group') {
+      $('.chat-title').html(selectedChatRoom);
+    } else {
+      $('.chat-title').html(selectedUser.first);
+
+    }
+
+    db_ref.on('child_added', function (data) {
+      var type;
+      if (data.val().user_id == user_id) {
+        type = "sent";
+      }
+      else {
+        type = "replies";
+      }
+      // $('<li class="' + type + '"><div class="msg-wrap"><div class="msg">' + data.val().message + '</div><div class="msg-info">' + data.val().currentUser.name + '.' + moment(data.val().timestamp).calendar() + '</div></div></li>').appendTo($('.messages ul'));
+      $('<li class="' + type + '"><div class="msg-wrap"><div class="msg"><div class="msg-info">' + data.val().currentUser.name + '</div>' + data.val().message + '<div class="chat-time">' + moment(data.val().timestamp).calendar() + '</div></div></div></li>').appendTo($('.messages ul'));
+      $('.message-input input').val(null);
+      $('.contact.active .preview').html('<span>You: </span>' + data.val().message);
+
+      $(".messages").animate({ scrollTop: $(".messages")[0].scrollHeight }, 0);
+    });
+
+    function writeUserData(message) {
+
+      db_ref.push({
+        user_id: user_id,
+        timestamp: Date.now(),
+        message: message,
+        currentUser: currentUser
+      });
+      sendPushNotification('title', message, localStorage.getItem('selectedChatRoom'));
+
+    }
+
+  </script>
+  <script>
+    document.addEventListener("deviceready", onDeviceReady, false);
+
+    function onDeviceReady() {
+      // Now safe to use device APIs
+      cordova.plugins.firebase.messaging.onMessage(function (payload) {
+        console.log("New foreground FCM message: ", payload);
+      });
+      cordova.plugins.firebase.messaging.onBackgroundMessage(function (payload) {
+        console.log("New background FCM message: ", payload);
+      });
+      cordova.plugins.firebase.messaging.getToken().then(function (token) {
+        console.log("Got device token: ", token);
+      });
+      var selectedChatRoom = localStorage.getItem('selectedChatRoom');
+      console.log("selectedChatRoom", selectedChatRoom);
+      cordova.plugins.firebase.messaging.subscribe(selectedChatRoom);
+    }
+
+
+    function sendPushNotification(title, message, topic, page) {
+      $.ajax({
+        type: "POST",
+        url: "https://fcm.googleapis.com/fcm/send",
+        data: JSON.stringify({
+          "to": "/topics/" + topic,
+          "priority": "high",
+          // "to": "dyzRaOXWugA:APA91bFm0TErd-JhMVVzGinPshQSSKSyP-kg5SNo6m9Jyza7oP_mLIT48ktwheJ1bxx6JmXGSo4-3d7XQoLDLXfpClZbt90QQpxBGXsS697CRFqVEcPQ3JE_b1srubwbesImM6tDllOL",
+          "notification": {
+            "body": message,
+            "title": title,
+            "notiKey": 'notiKey',
+            "page": page
+          }
+        }),
+        headers: {
+          "Authorization": 'key=AIzaSyD8rWYKF7T_7Ykoytx7IryQU9KUxpXRgTk',
+          "Content-Type": 'application/json'
+        },
+        dataType: "text",
+        success: function (data) { console.log("msg send", data) }
+      });
+    }
+  </script>
+</body>
+</html>
